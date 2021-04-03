@@ -2,8 +2,8 @@ name: cicd
 
 on:
   push:
-    branches:
-      - "master"
+    # branches:
+    #   - "master"
 
 jobs:
   # docker:
@@ -26,6 +26,7 @@ jobs:
     env:
       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
     steps:
+      - uses: actions/checkout@master
       # - name: test connection to cluster
       #   uses: steebchen/kubectl@master
       #   env:
@@ -42,7 +43,6 @@ jobs:
       - name: path
         run: |
           pwd
-          ls -lha ..
           ls -lha
 
       - name: kubectl
