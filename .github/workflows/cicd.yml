@@ -29,8 +29,15 @@ jobs:
           args: get pods
 
       - name: deploy to cluster
-        uses: steebchen/kubectl@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: yokawasa/action-setup-kube-tools@v0.4.0
         with:
-          args: apply -f deployment.yaml
+        kubectl: "1.20.2"
+        kustomize: "3.7.0"
+
+      - name: kubectl
+        id: kubectl
+        run: |
+          mkdir -p ~/.kube/
+          echo $KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
+          cd .kustomize
+          kustomize build . | kubectl apply -f -
