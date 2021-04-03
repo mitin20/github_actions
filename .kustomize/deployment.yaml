@@ -4,7 +4,7 @@ metadata:
   labels:
   name: prueba-gha
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       name: prueba-gha
@@ -15,7 +15,9 @@ spec:
     spec:
       containers:
         - name: prueba-gha
-          image: cgedbsnpeastus01.azurecr.io/prueba-gha
+          image: mitin20/prueba-gha
           ports:
             - containerPort: 80
               name: http
+      imagePullSecrets:
+        - name: mitin
