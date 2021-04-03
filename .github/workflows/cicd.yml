@@ -6,21 +6,26 @@ on:
       - "master"
 
 jobs:
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # - name: Build and push
-      #   id: docker_build
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     push: true
-      #     tags: mitin20/prueba-gha:latest
+  # docker:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Login to DockerHub
+  #       uses: docker/login-action@v1
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Build and push
+  #       id: docker_build
+  #       uses: docker/build-push-action@v2
+  #       with:
+  #         push: true
+  #         tags: mitin20/prueba-gha:latest
 
+  deploy-to-cluster:
+    runs-on: ubuntu-latest
+    env:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+    steps:
       - name: test connection to cluster
         uses: steebchen/kubectl@master
         env:
@@ -39,5 +44,7 @@ jobs:
         run: |
           mkdir -p ~/.kube/
           echo $KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
+          pwd
+          ls -lha
           cd .kustomize
           kustomize build . | kubectl apply -f -
