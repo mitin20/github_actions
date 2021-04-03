@@ -44,7 +44,5 @@ jobs:
         run: |
           mkdir -p ~/.kube/
           echo $KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
-          pwd
-          ls -lha
-          cd .kustomize
-          kustomize build . | kubectl apply -f -
+          kubectl get namesapaces
+          kubectl apply -f deployment.yaml
