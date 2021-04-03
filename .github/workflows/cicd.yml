@@ -44,5 +44,6 @@ jobs:
         run: |
           mkdir -p ~/.kube/
           echo $KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
-          cd kustomize
-          kustomize build . | kubectl apply -f -
+          kubectl version --client
+          kustomize version
+          kustomize build . | kubectl apply -f . -R
