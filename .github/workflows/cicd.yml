@@ -19,7 +19,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: mitin20/github_actions:latest
+          tags: mitin20/prueba-gha:latest
 # on: push
 # name: deploy
 # jobs:
